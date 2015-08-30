@@ -6,13 +6,30 @@
 function BringgClient(options) {
   this.accessToken = options.accessToken;
   this.secretKey = options.secretKey;
-  this.url = options.url || 'http://api.bringg.com';
+  this.url = options.url || 'http://api.bringg.com/';
   this.CryptoJS = options.CryptoJS;
   this.debug = options.debug || true;
 }
 
 BringgClient.prototype.createTask = function(task_details) {
   var uri =this.url + 'partner_api/tasks'
+    , request = new XMLHttpRequest();
+
+  request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) {
+    } else {
+    }
+  };
+
+  var params = this.sign_request(task_details);
+
+  request.open( 'POST', uri, true );
+  request.setRequestHeader('Content-type', 'application/json');
+  request.send( JSON.stringify(params) );
+};
+
+BringgClient.prototype.createTaskWithFormattedNote = function(task_details) {
+  var uri = this.url + 'partner_api/tasks'
     , request = new XMLHttpRequest();
 
   request.onreadystatechange = function() {
