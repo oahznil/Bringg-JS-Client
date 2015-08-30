@@ -36,7 +36,6 @@ BringgClient.prototype.createTaskWithFormattedNote = function(taskDetails) {
   var uri = this.url + 'partner_api/tasks'
     , params = this.sign_request(taskDetails);
 
-  debugger;
   var body = JSON.stringify(params)
 
   var post_options = {
@@ -51,7 +50,6 @@ BringgClient.prototype.createTaskWithFormattedNote = function(taskDetails) {
   };
 
   var post_req = http.request(post_options, function(res) {
-    debugger;
     console.log('Status: ' + res.statusCode);
     console.log('Headers: ' + JSON.stringify(res.headers));
     res.setEncoding('utf8');
@@ -61,7 +59,6 @@ BringgClient.prototype.createTaskWithFormattedNote = function(taskDetails) {
   });
 
   post_req.on('error', function(e) {
-    debugger;
     console.log('problem with request: ' + e.message);
   });
 
@@ -109,10 +106,7 @@ BringgClient.prototype.sign_request = function(params) {
 
   var query_params = serialize(params);
 
-  debugger;
-
   var signature = CryptoJS.HmacSHA1(query_params, this.secretKey).toString();
-  debugger;
   params.signature = signature;
   return params;
 };
